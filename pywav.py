@@ -38,6 +38,9 @@ r_fcnt=framerate*1
 loops=0
 import matplotlib.gridspec as gridspec
 import time
+
+mysubplot=-1
+
 while True:
 	loops = loops+1
 	frames=wr.readframes(r_fcnt)
@@ -54,10 +57,11 @@ while True:
 		return_onesided=True, boundary='zeros', padded=True, axis=-1)
 	print(Zxx)
 
+	time.sleep(.25)
 	if loops < 2:
-		fig_view,axs = plt.subplots(1,1,figsize=(1,1))
+		fig_view,axs = plt.subplots(1,1,figsize=(2,1))
 		plt.ion()
-		gs = gridspec.GridSpec(5,2)
+		gs = gridspec.GridSpec(1,1)
 		ax1 = plt.subplot(gs[0,0])
 		line = ax1.pcolormesh(t, f, np.abs(Zxx), vmin=0, vmax=2 * np.sqrt(2))
 		plt.title('STFT Magnitude')
@@ -67,9 +71,11 @@ while True:
 	else:
 		#pdb.set_trace()
 		ax1 = plt.subplot(gs[0,0])
-		time.sleep(1)
+		#f = range(0,len(f))
+		#t = range(0,len(f))
 		line = ax1.pcolormesh(t, f, np.abs(Zxx), vmin=0, vmax=2 * np.sqrt(2))
-		plt.show()
+		#plt.show()
+		plt.pause(0.05) # Calls matplotlib's event loop
 
 	#pdb.set_trace()
 	#for i in range(0,len(frames),framewidth):
